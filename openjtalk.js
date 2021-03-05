@@ -82,6 +82,7 @@ OpenJTalk.prototype = {
 			jf : this.gv_weight_lf0,
 			z  : this.audio_buff_size,
 			ow : path.join(this.wav_dir, wavFileName)
+			ot : 'open_jtalk.log'
 		};
 		for (var option in options) {
 			var value = options[option];
@@ -98,6 +99,16 @@ OpenJTalk.prototype = {
 				wav    : wavFileName
 			};
 			if (callback) callback(err, result);
+		});
+		var cmd = 'cat open_jtalk.log'
+		exec(cmd, function(error, stdout, stderr) {
+			// シェル上でコマンドを実行できなかった場合のエラー処理
+			if (error !== null) {
+			  console.log('exec error: ' + error);
+			  return;
+			}
+			// シェル上で実行したコマンドの標準出力が stdout に格納されている
+			console.log('stdout: ' + stdout);
 		});
 	}
 };
